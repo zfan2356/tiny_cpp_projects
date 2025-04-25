@@ -30,3 +30,19 @@
 *.exe
 *.out
 *.app
+
+# Build directories
+build/
+*/build/
+**/build/
+
+# Python egg info
+*.egg-info/
+*/egg-info/
+**/egg-info/
+
+# Command compile json
+command_compile.json
+*.command_compile.json
+.vscode/
+.clangd
