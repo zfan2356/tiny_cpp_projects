@@ -1,1 +1,1 @@
-target_add_bin(indexing_main main.cpp)
+target_add_bin(main main.cc)
