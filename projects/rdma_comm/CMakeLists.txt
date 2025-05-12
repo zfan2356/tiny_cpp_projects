@@ -149,16 +149,17 @@ set(FDB_VERSION 7.1.5-ibe)
 find_package(Threads REQUIRED)
 # find_package(Boost REQUIRED COMPONENTS filesystem system program_options)
 find_library(LIBUV_LIBRARY NAMES libuv1)
-enable_testing()
 
+enable_testing()
+include(Torch)
 # code coverage
 include(CodeCoverage)
 # clang format
 set(SOURCE_DIRS "${CMAKE_SOURCE_DIR}/csrc;${CMAKE_SOURCE_DIR}/tests;${CMAKE_SOURCE_DIR}/benchmarks")
 include(CLangFormat)
 # clang tidy
-set(CLANG_TIDY_SOURCE_DIRS "${CMAKE_SOURCE_DIR}/csrc;${CMAKE_SOURCE_DIR}/tests;${CMAKE_SOURCE_DIR}/benchmarks")
-include(CLangTidy)
+# set(CLANG_TIDY_SOURCE_DIRS "${CMAKE_SOURCE_DIR}/csrc;${CMAKE_SOURCE_DIR}/tests;${CMAKE_SOURCE_DIR}/benchmarks")
+# include(CLangTidy)
 # target
 include(Target)
 # # dump config
@@ -170,5 +171,5 @@ include(Target)
 
 # configure_file(CTestCustom.cmake ${CMAKE_BINARY_DIR} @ONLY)
 
-add_subdirectory(csrc)
+add_subdirectory(src)
 add_subdirectory(tests)

@@ -2,7 +2,6 @@
 # make format
 # make check-format
 
-message(STATUS "CONDA_PREFIX: ${CONDA_PREFIX}")
 set(CLANG_FORMAT "${CONDA_PREFIX}/bin/clang-format-14")
 set(SOURCE_DIRS "" CACHE STRING "Directories to format, separated by semicolons")
 
