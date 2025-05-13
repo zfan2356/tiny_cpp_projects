@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <cstdint>
 #include <sys/socket.h>
 
 namespace webserver::server {

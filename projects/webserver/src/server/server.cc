@@ -1,4 +1,6 @@
 #include "server.h"
+#include <netinet/in.h>
+#include <unistd.h>
 
 namespace webserver::server {
 Server::Server() {
@@ -16,6 +18,27 @@ Server::Server() {
 
   ret = listen(socket_fd_, 1024);
   assert(ret == 0);
+}
+
+Server::~Server() {
+  if (socket_fd_ >= 0) {
+    close(socket_fd_);
+  }
+}
+
+Server::Server(Server &&other) noexcept : socket_fd_(other.socket_fd_) {
+  other.socket_fd_ = -1;
+}
+
+Server &Server::operator=(Server &&other) noexcept {
+  socket_fd_ = other.socket_fd_;
+  other.socket_fd_ = -1;
+  return *this;
+}
+
+void Server::start() {
+  while (true) {
+  }
 }
 
 } // namespace webserver::server

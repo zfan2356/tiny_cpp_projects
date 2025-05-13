@@ -15,7 +15,7 @@ A collection of small C++ projects and libraries designed for educational purpos
 - todo: control cmake find_package
 
 ```shell
-cmake -B build -DCONDA_PREFIX="$CONDA_PREFIX"
+cmake -B build -DCONDA_PREFIX="$CONDA_PREFIX" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
 
 ## TODO
