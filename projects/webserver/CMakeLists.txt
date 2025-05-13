@@ -19,17 +19,17 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    message(STATUS "Clang compiler detected")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcoroutines-ts")
-    set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")
-    add_link_options(-fuse-ld=lld)
-    # Do not build with libc++ (LLVM's implementation of the C++ standard library) in fdb
-    set(USE_LIBCXX OFF)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    message(STATUS "GCC compiler detected")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcoroutines")
-endif()
+# if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+#     message(STATUS "Clang compiler detected")
+#     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcoroutines-ts")
+#     set(CMAKE_CXX_LINK_FLAGS "${CMAKE_CXX_LINK_FLAGS} -latomic")
+#     add_link_options(-fuse-ld=lld)
+#     # Do not build with libc++ (LLVM's implementation of the C++ standard library) in fdb
+#     set(USE_LIBCXX OFF)
+# elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+#     message(STATUS "GCC compiler detected")
+#     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcoroutines")
+# endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/../../cmake)
 
