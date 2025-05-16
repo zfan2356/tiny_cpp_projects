@@ -67,6 +67,12 @@ macro(target_add_test NAME)
     set_target_properties(${NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
 endmacro()
 
+macro(target_add_google_test NAME)
+    target_add_bin(${NAME} ${ARGN})
+    target_link_libraries(${NAME} GTest::gtest_main)
+    gtest_discover_tests(${NAME})
+endmacro()
+
 macro(target_add_fbs NAME PATH)
     cmake_parse_arguments(FBS "SERVICE" "" "DEPS" ${ARGN})
 

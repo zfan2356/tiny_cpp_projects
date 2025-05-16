@@ -10,6 +10,11 @@ endif()
 message(STATUS "CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
 message(STATUS "CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
 
+get_filename_component(PARENT_DIR ${PROJECT_SOURCE_DIR} DIRECTORY)
+message(STATUS "CMAKE_BINARY_DIR: ${CMAKE_BINARY_DIR}")
+set(THIRD_PARTY_DIR "${PARENT_DIR}/3rd")
+message(STATUS "Third party directory: ${THIRD_PARTY_DIR}")
+
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED OFF)
 set(CMAKE_C_EXTENSIONS ON)
@@ -48,5 +53,9 @@ set (CMAKE_ASM_FLAGS_RELWITHDEBINFO      "${CMAKE_ASM_FLAGS_RELWITHDEBINFO} -O3 
 set (CMAKE_ASM_FLAGS_DEBUG               "${CMAKE_ASM_FLAGS_DEBUG} -O0 ${DEBUG_INFO_FLAGS} -fno-inline ${CMAKE_ASM_FLAGS_ADD}")
 
 include(Target)
+include(CompileFlags)
+
+store_compile_flags()
 
 add_subdirectory(src)
+add_subdirectory(tests)
