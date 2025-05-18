@@ -7,8 +7,10 @@ namespace webserver::utils {
 
 inline Socket::Socket() : fd_(-1) {
   fd_ = socket(AF_INET, SOCK_STREAM, 0);
-  errif(fd_ != -1, "failed to create socket");
+  errif(fd_ == -1, "failed to create socket");
 }
+
+inline Socket::Socket(int fd) : fd_(fd) { errif(fd_ == -1, "fd is invalid"); }
 
 inline Socket::~Socket() {
   if (fd_ != -1) {
@@ -44,7 +46,7 @@ inline void Socket::listen(int backlog) {
 
 inline int Socket::accept(const EndPoint &endpoint) {
   int client_fd_ =
-      ::accept(fd_, (sockaddr *)&endpoint.addr_, endpoint.addr_len_);
+      ::accept(fd_, (sockaddr *)&endpoint.addr_, &endpoint.addr_len_);
   errif(client_fd_ == -1, "failed to accept socket");
   return client_fd_;
 }

@@ -8,6 +8,7 @@ namespace webserver::utils {
 class Socket {
 public:
   Socket();
+  Socket(int fd);
   ~Socket();
 
   Socket &operator=(const Socket &) = delete;

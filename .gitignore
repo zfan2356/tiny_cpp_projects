@@ -46,3 +46,4 @@ command_compile.json
 *.command_compile.json
 .vscode/
 .clangd
+.cache

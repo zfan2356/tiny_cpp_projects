@@ -4,6 +4,7 @@
 #include <cerrno>
 #include <cstdint>
 #include <cstring>
+#include <memory>
 #include <sstream>
 #include <sys/epoll.h>
 
@@ -60,7 +61,7 @@ inline void Epoll::del_fd(int fd) {
 
 template <concepts::WaitCallBack CallBack>
 inline void Epoll::wait(CallBack &&cb) {
-  auto events = std::make_unique<epoll_event[]>(1204);
+  auto events = std::make_unique<epoll_event[]>(1024);
   int n = epoll_wait(fd_, events.get(), 1024, -1);
   if (n < 0) {
     std::stringstream ss;
