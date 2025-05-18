@@ -3,8 +3,8 @@ project(webserver VERSION 0.1.0 LANGUAGES CXX)
 
 if(DEFINED CONDA_PREFIX)
     list(PREPEND CMAKE_PREFIX_PATH "${CONDA_PREFIX}")
-    set(CMAKE_CXX_COMPILER "${CONDA_PREFIX}/bin/clang++")
-    set(CMAKE_C_COMPILER "${CONDA_PREFIX}/bin/clang")
+    # set(CMAKE_CXX_COMPILER "${CONDA_PREFIX}/bin/clang++")
+    # set(CMAKE_C_COMPILER "${CONDA_PREFIX}/bin/clang")
 endif()
 
 message(STATUS "CMAKE_SOURCE_DIR: ${CMAKE_SOURCE_DIR}")

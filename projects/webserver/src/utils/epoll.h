@@ -2,6 +2,7 @@
 
 #include <sys/epoll.h>
 #include <type_traits>
+#include <unistd.h>
 
 namespace webserver::utils {
 

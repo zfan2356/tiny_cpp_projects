@@ -5,20 +5,6 @@
 #include <sys/socket.h>
 
 namespace webserver::server {
-
-class Endpoint {
-public:
-  Endpoint(uint32_t ip, uint16_t port);
-  ~Endpoint();
-
-  Endpoint(const Endpoint &) = delete;
-  Endpoint &operator=(const Endpoint &) = delete;
-
-private:
-  uint32_t ip_;
-  uint16_t port_;
-};
-
 class Server {
 public:
   Server();

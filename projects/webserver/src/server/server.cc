@@ -1,23 +1,24 @@
 #include "server.h"
+#include "../utils/epoll.h"
+#include "../utils/socket.h"
 #include <netinet/in.h>
 #include <unistd.h>
 
 namespace webserver::server {
+using ::webserver::utils::Epoll;
+using ::webserver::utils::Socket;
+
+using ::webserver::utils::EndPoint;
+
 Server::Server() {
-  socket_fd_ = socket(AF_INET, SOCK_STREAM, 0);
-  assert(socket_fd_ >= 0);
+  Socket *svr_socket = new Socket();
+  EndPoint endpoint("127.0.0.1", 8080);
 
-  struct sockaddr_in server_addr;
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  server_addr.sin_port = htons(8080);
+  svr_socket->bind(endpoint);
+  svr_socket->listen();
 
-  int ret =
-      bind(socket_fd_, (struct sockaddr *)&server_addr, sizeof(server_addr));
-  assert(ret == 0);
-
-  ret = listen(socket_fd_, 1024);
-  assert(ret == 0);
+  Epoll *epoll = new Epoll();
+  epoll->add_fd(svr_socket->get_fd(), 0, EPOLLIN | EPOLLLET);
 }
 
 Server::~Server() {

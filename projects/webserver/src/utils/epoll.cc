@@ -1,10 +1,9 @@
 #include "epoll.h"
-#include "util.hpp"
+#include "util.h"
 #include <assert.h>
 #include <cerrno>
 #include <cstdint>
 #include <cstring>
-#include <memory>
 #include <sstream>
 #include <sys/epoll.h>
 
@@ -41,9 +40,14 @@ inline void Epoll::add_fd(int fd, epoll_data_t data, uint32_t mode) {
   ev->events = mode;
   ev->data = data;
 
-  TORCH_CHECK(epoll_ctl(fd_, EPOLL_CTL_ADD, fd, ev) == 0,
-              "failed to add fd to epoll, errno=", errno,
-              " errmsg=", strerror(errno))
+  int ret = epoll_ctl(fd_, EPOLL_CTL_ADD, fd, ev);
+
+  if (ret != 0) {
+    std::stringstream ss;
+    ss << "failed to add fd to epoll, errno=" << errno
+       << " errmsg=" << strerror(errno);
+    errif(ret == 0, ss.str().c_str());
+  }
 }
 
 inline void Epoll::del_fd(int fd) {
