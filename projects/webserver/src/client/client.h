@@ -21,8 +21,8 @@ public:
   Client &operator=(Client &&) noexcept;
 
   void connect(const util::EndPoint &endpoint);
-  void send(std::string &&msg);
-  std::string recv() &&;
+  void send(std::string msg);
+  std::string recv();
 
 private:
   std::unique_ptr<util::Socket> socket_;
