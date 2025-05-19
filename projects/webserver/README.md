@@ -1,6 +1,12 @@
-开发环境 MacOS下的Ubuntu22.04 Docker Images, 架构arm64, 采用micromamba虚拟环境.
+# 1. Abstract
 
-方法:
+webserver is a high-performance server based on C++, built with CMake.
+
+# 2. Development Environment
+
+Ubuntu 22.04 Docker Image on MacOS, arm64 architecture, using micromamba virtual environment.
+
+Steps:
 
 ```shell
 docker pull ubuntu:22.04
@@ -15,19 +21,21 @@ echo "root:123456" | chpasswd
 mkdir /var/run/sshd
 /usr/sbin/sshd -D &
 ```
-之后回到宿主机, ssh链接
+Then return to the host machine and connect via SSH
 
 ```shell
 ssh root@localhost -p 2222
 ```
 
-注意之后如果失败了可以检测一下这个container是否在running
+Note: If it fails later, you can check if this container is running
+
+
 ```shell
 docker ps -a | grep my-ubuntu
 ```
-如果显示的是Existed, 就需要`docker start my-ubuntu`启动一下
+If it shows "Existed", you need to run `docker start my-ubuntu` to start it
 
-成功ssh之后下载micromamba
+After successfully SSH-ing, download micromamba
 
 ```shell
 curl -Ls https://micro.mamba.pm/api/micromamba/linux-aarch64/latest | tar -xvj bin/micromamba
@@ -37,3 +45,5 @@ source ~/.bashrc
 micromamba create -n clang-env clang clangxx -c conda-forge
 micromamba activate clang-env
 ```
+
+# 3. Docs
