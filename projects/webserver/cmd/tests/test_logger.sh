@@ -5,4 +5,4 @@ set -xe
 cd build
 
 make test_webserver
-./bin/test_webserver
+./tests/test_webserver

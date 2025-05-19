@@ -67,10 +67,21 @@ macro(target_add_test NAME)
     set_target_properties(${NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
 endmacro()
 
-macro(target_add_google_test NAME)
-    target_add_bin(${NAME} ${ARGN})
-    target_link_libraries(${NAME} GTest::gtest_main)
+macro(target_add_google_test NAME MAIN_FILE)
+    message(STATUS "ARGN " ${ARGN})
+    add_executable(${NAME} ${MAIN_FILE})
+    target_link_libraries(${NAME} GTest::gtest_main ${ARGN} "")
     gtest_discover_tests(${NAME})
+    target_include_directories(${NAME}
+        PUBLIC
+            $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
+            ${PROJECT_SOURCE_DIR}
+            ${PROJECT_BINARY_DIR}/src
+            ${PROJECT_BINARY_DIR}
+    )
+    add_test(NAME ${NAME} COMMAND ${NAME})
+    set_target_properties(${NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
+    target_enable_ipo(${NAME})
 endmacro()
 
 macro(target_add_fbs NAME PATH)

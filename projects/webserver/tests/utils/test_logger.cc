@@ -2,9 +2,9 @@
 #include <array>
 #include <cstdlib>
 #include <gtest/gtest.h>
-#include <thread>
 
 namespace webserver::utils {
+namespace {
 TEST(LoggerTest, Main) {
   setenv("WEBSERVER_LOG_TO_STDERR", "1", 1);
   LOG() << "Hello, World!";
@@ -22,4 +22,6 @@ TEST(LoggerTest, Main) {
   bzero(buf, sizeof(buf));
   std::cout << sizeof(buf) << std::endl;
 }
+
+} // namespace
 } // namespace webserver::utils

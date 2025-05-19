@@ -1,5 +1,8 @@
 #pragma once
 
+#include "util.h"
+#include <memory>
+#include <sstream>
 #include <sys/epoll.h>
 #include <type_traits>
 #include <unistd.h>
@@ -31,7 +34,21 @@ public:
 
   void del_fd(int fd);
 
-  template <concepts::WaitCallBack CallBack> void wait(CallBack &&callback);
+  template <concepts::WaitCallBack CallBack> void wait(CallBack &&callback) {
+    auto events = std::make_unique<epoll_event[]>(1024);
+    int n = epoll_wait(fd_, events.get(), 1024, -1);
+    if (n < 0) {
+      std::stringstream ss;
+      ss << "failed to wait for epoll events, errno=" << errno
+         << " errmsg=" << strerror(errno);
+      errif(n < 0, ss.str().c_str());
+    }
+    for (int i = 0; i < n; ++i) {
+      std::forward<CallBack>(callback)(events[i]);
+    }
+  }
+
+  int get_fd() const noexcept { return fd_; }
 
 private:
   int fd_{-1};

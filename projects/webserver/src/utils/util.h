@@ -5,11 +5,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include <string>
 
 namespace webserver::utils {
 
-void errif(bool condition, const char *errmsg) {
+inline void errif(bool condition, const char *errmsg) {
   if (condition) {
     perror(errmsg);
     exit(EXIT_FAILURE);

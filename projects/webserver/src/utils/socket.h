@@ -19,11 +19,11 @@ public:
 
   void bind(const EndPoint &endpoint);
   void listen(int backlog = 128);
-  int accept(const EndPoint &endpoint);
+  int accept(EndPoint &endpoint);
   int get_fd() noexcept;
 
 private:
-  int fd_;
+  int fd_{-1};
 };
 
 } // namespace webserver::utils

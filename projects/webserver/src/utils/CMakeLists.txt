@@ -1,2 +1,3 @@
 target_add_shared_lib(epoll)
 target_add_shared_lib(stream_logger)
+target_add_shared_lib(socket)
