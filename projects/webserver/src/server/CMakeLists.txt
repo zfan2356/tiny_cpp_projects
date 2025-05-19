@@ -1,1 +1,1 @@
-target_add_lib(server)
+target_add_shared_lib(server epoll socket)

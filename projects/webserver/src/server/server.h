@@ -1,11 +1,9 @@
 #pragma once
 
-#include <cstdint>
+#include "utils/epoll.h"
+#include "utils/socket.h"
 #include <memory>
 #include <sys/socket.h>
-#include <utils/epoll.h>
-#include <utils/socket.h>
-#include <utils/stream_logger.h>
 
 namespace webserver::server {
 

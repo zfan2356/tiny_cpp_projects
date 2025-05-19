@@ -21,3 +21,8 @@ target_add_google_test(test_epoll
     ${CMAKE_CURRENT_SOURCE_DIR}/utils/test_epoll.cc
     epoll socket
 )
+
+target_add_google_test(test_server
+    ${CMAKE_CURRENT_SOURCE_DIR}/server/test_server.cc
+    server
+)

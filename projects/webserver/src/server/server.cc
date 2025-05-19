@@ -1,6 +1,6 @@
 #include "server.h"
+#include "utils/stream_logger.h"
 #include <cstring>
-#include <memory>
 #include <netinet/in.h>
 #include <unistd.h>
 
@@ -8,30 +8,33 @@ namespace webserver::server {
 
 constexpr size_t BUFFER_SIZE = 1024;
 
-inline Server::Server() {
+Server::Server() {
   socket_ = std::make_unique<util::Socket>();
+  util::errif(socket_->get_fd() == -1, "[Server] failed to create socket");
   util::EndPoint endpoint("127.0.0.1", 8080);
 
   socket_->bind(endpoint);
   socket_->listen();
 
   epoll_ = std::make_unique<util::Epoll>();
+  util::errif(epoll_->get_fd() == -1, "[Server] failed to create epoll");
+
   epoll_->add_fd(socket_->get_fd(), 0, EPOLLIN | EPOLLET);
 }
 
-inline Server::~Server() {
+Server::~Server() {
   if (socket_->get_fd() >= 0) {
     close(socket_->get_fd());
   }
 }
 
-inline Server::Server(Server &&other) noexcept
+Server::Server(Server &&other) noexcept
     : socket_(std::move(other.socket_)), epoll_(std::move(other.epoll_)) {
   other.socket_ = nullptr;
   other.epoll_ = nullptr;
 }
 
-inline Server &Server::operator=(Server &&other) noexcept {
+Server &Server::operator=(Server &&other) noexcept {
   socket_ = std::move(other.socket_);
   epoll_ = std::move(other.epoll_);
   return *this;
