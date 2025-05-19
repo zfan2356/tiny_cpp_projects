@@ -49,9 +49,7 @@ TEST_F(EpollTest, WaitForEvents) {
     sleep(1);
     auto client = std::make_unique<Socket>();
     EndPoint endpoint("127.0.0.1", 12345);
-    int err = connect(client->get_fd(), (struct sockaddr *)&endpoint.addr_,
-                      endpoint.addr_len_);
-    EXPECT_EQ(err, 0);
+    client->connect(endpoint);
   });
 
   bool event_received = false;

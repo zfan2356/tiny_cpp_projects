@@ -2,12 +2,9 @@
 
 set -xe
 
-if [ -d "build" ]; then
-    rm -rf build
-fi
-
-bash cmd/build.sh
 
 cd build
+cmake ..
+
 make test_epoll
 ./tests/test_epoll

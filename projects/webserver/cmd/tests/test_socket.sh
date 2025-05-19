@@ -2,12 +2,8 @@
 
 set -xe
 
-if [ -d "build" ]; then
-    rm -rf build
-fi
-
-bash cmd/build.sh
-
 cd build
+cmake ..
+
 make test_socket
 ./tests/test_socket

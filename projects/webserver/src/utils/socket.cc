@@ -49,6 +49,12 @@ int Socket::accept(EndPoint &endpoint) {
   return client_fd_;
 }
 
+int Socket::connect(const EndPoint &endpoint) {
+  int ret = ::connect(fd_, (sockaddr *)&endpoint.addr_, endpoint.addr_len_);
+  errif(ret == -1, "failed to connect socket");
+  return ret;
+}
+
 int Socket::get_fd() noexcept { return fd_; }
 
 } // namespace webserver::utils

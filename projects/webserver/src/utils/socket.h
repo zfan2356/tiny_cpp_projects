@@ -21,6 +21,7 @@ public:
   void listen(int backlog = 128);
   int accept(EndPoint &endpoint);
   int get_fd() noexcept;
+  int connect(const EndPoint &endpoint);
 
 private:
   int fd_{-1};
