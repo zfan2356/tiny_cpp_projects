@@ -2,9 +2,13 @@
 
 #include <arpa/inet.h>
 #include <cerrno>
+#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <functional>
+#include <iostream>
+#include <netinet/in.h>
 
 namespace webserver::utils {
 
@@ -13,6 +17,29 @@ inline void errif(bool condition, const char *errmsg) {
     perror(errmsg);
     exit(EXIT_FAILURE);
   }
+}
+
+struct EndPointV2 {
+  uint32_t ip_;
+  uint16_t port_;
+
+  bool operator==(const EndPointV2 &other) const {
+    return ip_ == other.ip_ && port_ == other.port_;
+  }
+
+  struct Hasher {
+    size_t operator()(const EndPointV2 &endpoint) const {
+      return std::hash<uint32_t>()(endpoint.ip_) ^
+             std::hash<uint16_t>()(endpoint.port_);
+    }
+  };
+};
+
+inline std::ostream &operator<<(std::ostream &os, const EndPointV2 &endpoint) {
+  char ip_str[INET_ADDRSTRLEN] = {};
+  inet_ntop(AF_INET, &endpoint.ip_, ip_str, INET_ADDRSTRLEN);
+  os << "{EP: " << ip_str << ":" << endpoint.port_ << "}";
+  return os;
 }
 
 class EndPoint {
